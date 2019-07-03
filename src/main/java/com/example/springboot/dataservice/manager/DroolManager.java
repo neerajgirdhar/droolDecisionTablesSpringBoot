@@ -26,7 +26,7 @@ public class DroolManager {
     {
         KieServices service  = KieServices.Factory.get();
         KieFileSystem kieFileSystem =  service.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource("MissingMoreThan3Hours.xls"));
+        kieFileSystem.write(ResourceFactory.newClassPathResource("com/missingAttendance/rules/MissingMoreThan3Hours.xls"));
 
 
         KieBuilder kieBuilder = service.newKieBuilder(kieFileSystem).buildAll();
