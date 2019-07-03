@@ -1,7 +1,7 @@
 package com.example.springboot.dataservice.controller;
 
 import java.io.IOException;
-
+import com.example.springboot.dataservice.model.Status;
 import com.example.springboot.dataservice.manager.DroolManager;
 import com.example.springboot.dataservice.model.Attendance;
 import org.slf4j.Logger;
@@ -23,11 +23,12 @@ public class DroolController {
 
 
    @PostMapping(path ="/checkAttendance", consumes="application/json"   ,produces = "application/json" )
-    public String checkAttendance(@RequestBody Attendance attendance)
+    public Status checkAttendance(@RequestBody Attendance attendance)
             throws IOException, InterruptedException {
 
         log.info("in checkAttendance---->");
-
-        return droolManager.check(attendance);
+      Status status = new Status();
+         status.setStatus(droolManager.check(attendance));
+       return status;
     }
 }
