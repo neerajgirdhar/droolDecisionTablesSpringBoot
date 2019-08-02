@@ -1,6 +1,7 @@
 package com.example.springboot.dataservice.manager;
 
 import com.example.springboot.dataservice.model.Attendance;
+import com.example.springboot.dataservice.model.CRR;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
@@ -28,6 +29,8 @@ public class DroolManager {
         KieFileSystem kieFileSystem =  service.newKieFileSystem();
         kieFileSystem.write(ResourceFactory.newClassPathResource("com/missingAttendance/rules/MissingMoreThan3Hours.xls"));
 
+        kieFileSystem.write(ResourceFactory.newClassPathResource("com/crr/rules/CRR.xls"));
+
 
         KieBuilder kieBuilder = service.newKieBuilder(kieFileSystem).buildAll();
         if(kieBuilder.getResults().getMessages(Message.Level.ERROR).size()>0){
@@ -46,7 +49,7 @@ public class DroolManager {
         this.kieContainerSessionsPool.newStatelessKieSession().execute(attendance);
         if(attendance.getStatus()==0)
         {
-            message ="Great your more than 3 hours exits in last 90 days is with in Limits";
+            message ="--->Great your more than 3 hours exits in last 90 days is with in Limits";
         }
         if(attendance.getStatus()==1)
         {
@@ -61,4 +64,30 @@ public class DroolManager {
     }
 
 
+    public String checkCRR(CRR crr)
+    {
+        String message="OK";
+        this.kieContainerSessionsPool.newStatelessKieSession().execute(crr);
+
+
+        if(crr.getRating()==0)
+        {
+            message ="Your Expected Rating is NeedsImprovement with the score "+crr.getScore();
+        }
+        if(crr.getRating()==1)
+        {
+            message ="Your Expected Rating is MetExpecation with the score "+crr.getScore();
+        }
+        if(crr.getRating()==2)
+        {
+            message ="Your Expected Rating is Commendable with the score "+crr.getScore();
+        }
+
+        if(crr.getRating()==3)
+        {
+            message ="Your Expected Rating is Outstanding with the score "+crr.getScore();
+        }
+
+        return message;
+    }
 }

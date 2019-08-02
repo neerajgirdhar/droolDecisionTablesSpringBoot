@@ -73,7 +73,7 @@ public class AppTest
         Assert.assertEquals("Dear Employee your more than 3 hours exits in last 90 days is more than 3.Email will be sent to your manager",resp.getBody().getStatus());
 
     }
-    
+
     @Test
     public void checkBand4Good() throws Exception
     {
@@ -90,7 +90,7 @@ public class AppTest
 //Verify request succeed
         Assert.assertEquals(200, resp.getStatusCodeValue());
 
-        Assert.assertEquals("Great your more than 3 hours exits in last 90 days is with in Limits",resp.getBody().getStatus());
+        Assert.assertEquals("--->Great your more than 3 hours exits in last 90 days is with in Limits",resp.getBody().getStatus());
 
     }
 
