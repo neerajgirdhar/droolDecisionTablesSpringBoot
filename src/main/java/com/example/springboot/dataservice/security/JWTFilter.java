@@ -17,7 +17,7 @@ public class JWTFilter  extends AbstractAuthenticationProcessingFilter {
 
 
     public JWTFilter() {
-        super("/jwt/**");
+        super("/secure/**");
     }
 
     @Override

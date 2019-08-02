@@ -17,7 +17,7 @@ public class BasicController {
     private static final Logger log = LoggerFactory
             .getLogger(BasicController.class);
 
-    @GetMapping(path ="/jwt/authenticateWithJWT")
+    @GetMapping(path ="/secure/authenticateWithJWT")
     public String authenticateWithJWT()
             throws IOException, InterruptedException {
 

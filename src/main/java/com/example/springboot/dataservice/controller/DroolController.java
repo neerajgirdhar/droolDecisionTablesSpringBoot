@@ -35,7 +35,7 @@ public class DroolController {
        return status;
     }
 
-    @PostMapping(path ="/checkCRR", consumes="application/json"   ,produces = "application/json" )
+    @PostMapping(path ="/secure/checkCRR", consumes="application/json"   ,produces = "application/json" )
     public Rating checkCRR(@RequestBody CRR crr)
             throws IOException, InterruptedException {
 
