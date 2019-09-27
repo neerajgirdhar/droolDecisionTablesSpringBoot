@@ -20,19 +20,35 @@ public class JWTFilter  extends AbstractAuthenticationProcessingFilter {
         super("/secure/**");
     }
 
+
+
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        String header =request.getHeader("Authorization");
-        if(header ==null || ! header.startsWith("Token"))
-        {
-            throw new RuntimeException("Token is missing");
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException {
 
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token");
+        response.addHeader("Access-Control-Expose-Headers", "xsrf-token");
+        if ("OPTIONS".equals(request.getMethod())) {
+            System.out.println("Browser Request--->");
+            response.setStatus(HttpServletResponse.SC_OK);
+            return null;
+        }else {
+            String header = request.getHeader("Authorization");
+            System.out.println("header---> " + header);
+            if (header == null || !header.startsWith("Token ")) {
+                throw new RuntimeException("Token is missing");
+
+            }
+            String actualJWTToken = header.substring(6);
+            System.out.println("---------->" + actualJWTToken);
+            JWTAuthenticationToken jwtAuthenticationToken = new JWTAuthenticationToken(actualJWTToken);
+            return getAuthenticationManager().authenticate(jwtAuthenticationToken);
         }
-        String actualJWTToken =header.substring(6);
-        System.out.println("---------->"+actualJWTToken);
-        JWTAuthenticationToken jwtAuthenticationToken = new JWTAuthenticationToken(actualJWTToken);
-        return getAuthenticationManager().authenticate(jwtAuthenticationToken);
-
 
     }
 
@@ -42,4 +58,6 @@ public class JWTFilter  extends AbstractAuthenticationProcessingFilter {
         chain.doFilter(request,response);
 
     }
+
+
 }

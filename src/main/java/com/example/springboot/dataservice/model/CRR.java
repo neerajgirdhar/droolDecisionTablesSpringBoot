@@ -90,7 +90,7 @@ public class CRR {
                 criteria = criteria + 2;
             }
             if (dealsWonWorthInMillion > 12) {
-                criteria = criteria + 2;
+                criteria = criteria + 3;
             }
             this.score = criteria;
             return criteria;
